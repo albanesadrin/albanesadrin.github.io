@@ -12,7 +12,7 @@ export default class App {
     start() {
         this.buildCanvas()
 
-        this.pipe.push({ x: (this.canvas.width / 2), y: this.canvas.height, angle: -Math.PI / 2, depth: 0, thickness: config.branchThickness });
+        this.pipe.push({ x: this.canvas.width / 2, y: this.canvas.height, angle: -Math.PI / 2, depth: 0, thickness: config.branchThickness });
 
         while (this.pipe.length > 0 && this.drawn.value <= config.age) {
             const next = this.pipe[0];
@@ -37,8 +37,8 @@ export default class App {
         // Dessiner la branche principale
         this.context.beginPath();
         this.context.moveTo(x, y);
-        const endX = x + Math.cos(angle) * ((config.seedRandom(x, y) * (config.branchMaxLength - config.branchMinLength) + config.branchMinLength));
-        const endY = y + Math.sin(angle) * ((config.seedRandom(x, y) * (config.branchMaxLength - config.branchMinLength) + config.branchMinLength));
+        const endX = x + Math.cos(angle) * ((config.seedRandom(this.drawn.value, this.drawn.value) * (config.branchMaxLength - config.branchMinLength) + config.branchMinLength));
+        const endY = y + Math.sin(angle) * ((config.seedRandom(this.drawn.value, this.drawn.value) * (config.branchMaxLength - config.branchMinLength) + config.branchMinLength));
         this.context.quadraticCurveTo(curveControlPointX, curveControlPointY, endX, endY);
         this.context.strokeStyle = colorWithVariation(config.branchColor, config.branchColorVariation, endX, config.seedRandom);
         this.context.lineWidth = thickness;
